@@ -44,7 +44,7 @@ systemctl enable --now nginx docker
 
 # change ssh port to 2222
 
-bash change_port.sh 2222
+bash ./change_port.sh 2222
 
 
 # ufw settings
@@ -54,3 +54,4 @@ ufw default deny incoming
 ufw deny 22
 ufw allow 2222
 systemctl enable --now ufw
+ufw enable
