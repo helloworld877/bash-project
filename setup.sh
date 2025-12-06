@@ -52,4 +52,5 @@ bash change_port.sh 2222
 ufw default allow outgoing 
 ufw default deny incoming
 ufw deny 22
+ufw allow 2222
 systemctl enable --now ufw
