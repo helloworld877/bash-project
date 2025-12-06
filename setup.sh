@@ -45,6 +45,12 @@ systemctl enable --now nginx docker
 # change ssh port to 2222
 
 bash ./change_port.sh 2222
+if [ $? -ne 0 ]; then
+    echo "############### ERROR: change_port.sh failed!"
+    exit 1
+else
+    echo "############  SSH port changed to 2222 successfully."
+fi
 
 
 # ufw settings
