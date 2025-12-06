@@ -8,14 +8,24 @@ if [ -z "$NEW_PORT" ]; then
 fi
 
 SSHD_CONFIG="/etc/ssh/sshd_config"
+SSHD_DIR="/etc/ssh/sshd_config.d"
 
-# Replace existing Port directive or add if missing
-sed -i "s/^#Port .*/Port $NEW_PORT/; s/^Port .*/Port $NEW_PORT/" $SSHD_CONFIG
+# Remove all existing Port lines everywhere
+sed -i '/^Port /d' "$SSHD_CONFIG"
+sed -i '/^#Port /d' "$SSHD_CONFIG"
 
-# If no Port line exists at all, add it
-if ! grep -q "^Port $NEW_PORT" $SSHD_CONFIG; then
-    echo "Port $NEW_PORT" >> $SSHD_CONFIG
+# Remove Port lines in sshd_config.d
+for FILE in $SSHD_DIR/*.conf; do
+    sed -i '/^Port /d' "$FILE"
+    sed -i '/^#Port /d' "$FILE"
+done
+
+# Add new port at end of main config
+echo "Port $NEW_PORT" >> "$SSHD_CONFIG"
+
+# Restart SSH safely
+if systemctl restart sshd 2>/dev/null; then
+    echo "SSH restarted successfully."
+else
+    systemctl restart ssh
 fi
-
-# Restart SSH
-systemctl restart sshd 2>/dev/null || systemctl restart ssh
