@@ -24,5 +24,3 @@ jobs:
             - job-3
         steps:
             - run: echo "This is the fourth job"
-
-            # test
