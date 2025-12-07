@@ -23,9 +23,5 @@ done
 # Add new port at end of main config
 echo "Port $NEW_PORT" >> "$SSHD_CONFIG"
 
-# Restart SSH safely
-if systemctl restart sshd 2>/dev/null; then
-    echo "SSH restarted successfully."
-else
-    systemctl restart ssh
-fi
+service sshd restart
+systemctl restart sshd
