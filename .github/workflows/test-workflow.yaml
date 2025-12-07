@@ -1,0 +1,15 @@
+# workflow name
+name: "test-workflow"
+
+# event trigger
+on:
+    workflow_dispatch:
+# job list
+jobs:
+    # first job name
+    say-hello-bash:
+        # runner
+        runs-on: ubuntu-22.04
+        # steps in a job
+        steps:
+            - run: echo "hello from my first workflow"
