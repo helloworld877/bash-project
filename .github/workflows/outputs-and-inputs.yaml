@@ -6,7 +6,7 @@ jobs:
   producer:
           runs-on: ubuntu-22.04
           outputs:
-              foo: ${{steps.generate-output.foo}}
+              foo: ${{steps.generate-output.outputs.foo}}
           steps:
               - name: Generate Output
                 id: generate-output
