@@ -1,0 +1,28 @@
+name: Outputs and Inputs Example
+
+on: workflow_dispatch
+
+jobs:
+  producer:
+          runs-on: ubuntu-22.04
+          outputs:
+              foo: ${{steps.generate-output.foo}}
+          steps:
+              - name: Generate Output
+                id: generate-output
+                run: |
+                  foo=bar
+                  echo "foo=${foo}" >> $GITHUB_OUTPUT
+                  echo "FOO=${foo}" >> $GITHUB_ENV
+              - name: inspect values
+                run: |
+                  echo "Foo from GITHUB_ENV:  $FOO"
+                  echo "Foo from GITHUB_OUTPUT:  $foo"
+  consumer:
+          runs-on: ubuntu-22.04
+          needs: producer
+          steps:
+              - name: Inspect-Values
+                run: |
+                  echo "value from producer: ${{needs.producer.outputs.foo}}"
+                  echo "Value from GITHUB_ENV:  ${FOO:<UNSET>}"
