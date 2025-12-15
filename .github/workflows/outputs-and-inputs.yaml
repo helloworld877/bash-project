@@ -17,7 +17,7 @@ jobs:
               - name: inspect values
                 run: |
                   echo "Foo from GITHUB_ENV:  $FOO"
-                  echo "Foo from GITHUB_OUTPUT:  $foo"
+                  echo "Foo from GITHUB_OUTPUT:  ${{steps.generate-output.outputs.foo}}"
   consumer:
           runs-on: ubuntu-22.04
           needs: producer
